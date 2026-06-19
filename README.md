@@ -1,2 +1,2 @@
-# gratis.meeting
+# quote
 to collect org. data
