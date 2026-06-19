@@ -1,2 +1,2 @@
 # gratis.meeting
-to collect org.data
+to collect org. data
