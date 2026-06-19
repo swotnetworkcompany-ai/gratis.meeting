@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -186,6 +186,31 @@
     </div>
   </div>
 
+  <!-- Client Information -->
+  <div class="card">
+    <div class="card-head"><span class="icon">👤</span><h2>Client Information</h2></div>
+    <div class="card-body">
+      <div class="field">
+        <label class="lbl">Person in Charge (PIC) Name</label>
+        <input type="text" id="pic-name" placeholder="e.g. Ahmad Razif bin Abdullah">
+      </div>
+      <div class="row3">
+        <div class="field">
+          <label class="lbl">Client Phone Number</label>
+          <input type="text" id="client-phone" placeholder="e.g. +673 8XX XXXX">
+        </div>
+        <div class="field">
+          <label class="lbl">Client Personal Email</label>
+          <input type="text" id="client-email" placeholder="e.g. ahmad@gmail.com">
+        </div>
+        <div class="field">
+          <label class="lbl">Company Email</label>
+          <input type="text" id="company-email" placeholder="e.g. info@company.com">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Budget -->
   <div class="card">
     <div class="card-head"><span class="icon">💰</span><h2>1 · Budget</h2></div>
@@ -324,7 +349,10 @@
       <div class="sig-box">
         <strong>Client</strong><br>
         Signature: ___________________<br>
-        Name: _______________________<br>
+        Name: <span id="modal-pic-name">_______________________</span><br>
+        Phone: <span id="modal-phone">—</span><br>
+        Email: <span id="modal-email">—</span><br>
+        Company Email: <span id="modal-company-email">—</span><br>
         Date: _______________________
       </div>
     </div>
@@ -414,7 +442,11 @@
       return label;
     });
     return {
-      client:    document.getElementById('client-name').value.trim(),
+      client:       document.getElementById('client-name').value.trim(),
+      picName:      document.getElementById('pic-name').value.trim(),
+      clientPhone:  document.getElementById('client-phone').value.trim(),
+      clientEmail:  document.getElementById('client-email').value.trim(),
+      companyEmail: document.getElementById('company-email').value.trim(),
       agreeDate: document.getElementById('agree-date').value,
       startDate: document.getElementById('start-date').value,
       endDate:   document.getElementById('end-date').value,
@@ -433,6 +465,10 @@
     const el = document.getElementById('sum-list');
     const lines = [];
     if (v.client)   lines.push(['Client', v.client]);
+    if (v.picName)      lines.push(['PIC Name', v.picName]);
+    if (v.clientPhone)  lines.push(['Phone', v.clientPhone]);
+    if (v.clientEmail)  lines.push(['Client Email', v.clientEmail]);
+    if (v.companyEmail) lines.push(['Company Email', v.companyEmail]);
     if (v.agreeDate) lines.push(['Agreement Date', v.agreeDate]);
     if (v.startDate && v.endDate) lines.push(['Service Period', v.startDate + ' to ' + v.endDate]);
     if (v.budget)   lines.push(['Monthly Budget', 'BND $' + v.budget]);
@@ -457,6 +493,10 @@
     const sep = '─'.repeat(36);
     let t = '*SNC CUSTOM PACKAGE FORM*\n' + sep + '\n';
     if (v.client)    t += '📌 *Client:* ' + v.client + '\n';
+    if (v.picName)      t += '👤 *PIC Name:* ' + v.picName + '\n';
+    if (v.clientPhone)  t += '📞 *Phone:* ' + v.clientPhone + '\n';
+    if (v.clientEmail)  t += '✉️ *Client Email:* ' + v.clientEmail + '\n';
+    if (v.companyEmail) t += '🏢 *Company Email:* ' + v.companyEmail + '\n';
     if (v.agreeDate) t += '📅 *Agreement Date:* ' + v.agreeDate + '\n';
     if (v.startDate) t += '🗓 *Service Period:* ' + v.startDate + ' to ' + v.endDate + '\n';
     t += sep + '\n';
@@ -499,7 +539,12 @@
   }
 
   function openModal() {
+    const v = getValues();
     document.getElementById('preview-box').textContent = buildText().replace(/\*/g,'').replace(/_/g,'');
+    document.getElementById('modal-pic-name').textContent = v.picName || '_______________________';
+    document.getElementById('modal-phone').textContent = v.clientPhone || '—';
+    document.getElementById('modal-email').textContent = v.clientEmail || '—';
+    document.getElementById('modal-company-email').textContent = v.companyEmail || '—';
     document.getElementById('modal').classList.add('open');
   }
 
